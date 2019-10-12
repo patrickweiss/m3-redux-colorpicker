@@ -17,6 +17,21 @@ export default class RGBColorPicker extends React.PureComponent<IProps, IState> 
           gValue:50,
           bValue:200
       }
+      this.onIntensityChange = this.onIntensityChange.bind(this);
+    }
+
+    onIntensityChange(color:baseColor,intensity:number){
+        switch (color){
+            case (baseColor.r):
+                this.setState({rValue:intensity});
+                break;
+            case (baseColor.g):
+                this.setState({gValue:intensity});
+                break;
+            case (baseColor.b):
+                this.setState({bValue:intensity});
+                break;
+        }
     }
   
     render(){
@@ -28,9 +43,9 @@ export default class RGBColorPicker extends React.PureComponent<IProps, IState> 
             "background-color": colorSample
         }
       return <div>
-        <SingleColorPicker color={baseColor.r} intensity={this.state.rValue}/>
-        <SingleColorPicker color={baseColor.g} intensity={this.state.gValue}/>
-        <SingleColorPicker color={baseColor.b} intensity={this.state.bValue} />
+        <SingleColorPicker color={baseColor.r} intensity={this.state.rValue} onIntensityChange={this.onIntensityChange}/>
+        <SingleColorPicker color={baseColor.g} intensity={this.state.gValue} onIntensityChange={this.onIntensityChange}/>
+        <SingleColorPicker color={baseColor.b} intensity={this.state.bValue} onIntensityChange={this.onIntensityChange}/>
         <div style={rgbStyle}></div>mixed color
       </div>
     }
