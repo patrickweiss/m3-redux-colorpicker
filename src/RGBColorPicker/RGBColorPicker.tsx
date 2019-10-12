@@ -1,22 +1,14 @@
 import React from 'react';
 import SingleColorPicker, {baseColor} from './SingleColorPicker'; 
-interface IProps{};
-interface IState{
-    rValue:number;
-    gValue:number;
-    bValue:number;
-};
+import {reduxState,dispatch,ActionType} from '../index'
 
-export default class RGBColorPicker extends React.PureComponent<IProps, IState> {
 
-    constructor(props: IProps) {
+export default class RGBColorPicker extends React.PureComponent {
+
+    constructor(props:any) {
       console.log("new RGBColorPicker component will be initialized");
       super(props);
-      this.state = {
-          rValue:5,
-          gValue:50,
-          bValue:200
-      }
+     
       this.onIntensityChange = this.onIntensityChange.bind(this);
     }
 
@@ -35,7 +27,7 @@ export default class RGBColorPicker extends React.PureComponent<IProps, IState> 
     }
   
     render(){
-        let colorSample: string = `rgb(${this.state.rValue},${this.state.gValue},${this.state.bValue})`
+        let colorSample: string = `rgb(${reduxState().RGBColorPicker.rValue},${reduxState().RGBColorPicker.gValue},${reduxState().RGBColorPicker.bValue})`
         const rgbStyle = {
             display: "inline-block",
             width: "20px",
@@ -43,9 +35,9 @@ export default class RGBColorPicker extends React.PureComponent<IProps, IState> 
             backgroundColor: colorSample
         }
       return <div>
-        <SingleColorPicker color={baseColor.r} intensity={this.state.rValue} onIntensityChange={this.onIntensityChange}/>
-        <SingleColorPicker color={baseColor.g} intensity={this.state.gValue} onIntensityChange={this.onIntensityChange}/>
-        <SingleColorPicker color={baseColor.b} intensity={this.state.bValue} onIntensityChange={this.onIntensityChange}/>
+        <SingleColorPicker color={baseColor.r} intensity={reduxState().RGBColorPicker.rValue} onIntensityChange={this.onIntensityChange}/>
+        <SingleColorPicker color={baseColor.g} intensity={reduxState().RGBColorPicker.gValue} onIntensityChange={this.onIntensityChange}/>
+        <SingleColorPicker color={baseColor.b} intensity={reduxState().RGBColorPicker.bValue} onIntensityChange={this.onIntensityChange}/>
         <div style={rgbStyle}></div>mixed color
       </div>
     }
