@@ -1,26 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import RGBColorPicker from './RGBColorPicker/RGBColorPicker'
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+interface IProps { };
+interface IState { };
+
+export default class App extends React.PureComponent<IProps, IState> {
+
+  constructor(props: IProps) {
+    console.log("new App component will be initialized");
+    super(props);
+  }
+
+  render() {
+    return <div>
+      <p>Hello TypeScript world</p>
+      <RGBColorPicker />
+
+
     </div>
-  );
+  }
 }
-
-export default App;
