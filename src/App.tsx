@@ -23,7 +23,7 @@ export default class App extends React.PureComponent<IProps, IState> {
       <p>stateCounterFromReactProperty: {this.props.stateCounter}</p>
       <p>stateCounterFromRedux:{reduxState().stateCounter}
        <button onClick={this.handleReduxTest}>Redux Test</button></p>
-      <RGBColorPicker />
+      <RGBColorPicker stateCounter={reduxState().stateCounter} />
 
 
     </div>

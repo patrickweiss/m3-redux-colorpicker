@@ -5,7 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import { createStore, compose } from 'redux';
-
+import { IIntensityAction, baseColor } from './RGBColorPicker/SingleColorPicker'
 
 export enum ActionType {
     INIT = "@@INIT",
@@ -39,13 +39,30 @@ const initialState: IState = {
 
 
 const reducer = (state = initialState, action: IAction) => {
-    console.log("REDUCER CALLED, stateCounter:"+state.stateCounter+" ACTION:" + action.type);
+    console.log("REDUCER CALLED, stateCounter:" + state.stateCounter + " ACTION:" + action.type);
     let newState: IState = state;
     newState = JSON.parse(JSON.stringify(state)) as IState;
     newState.stateCounter++;
     switch (action.type) {
         case ActionType.INIT:
             return newState;
+        case ActionType.update_color_intensity:
+            const intensityAction = action as IIntensityAction
+            const color = intensityAction.color
+            console.log(color);
+            switch (color) {
+                case (baseColor.r):
+                    console.log("update red");
+                    newState.RGBColorPicker.rValue = intensityAction.intensity;
+                    break;
+                case (baseColor.g):
+                    newState.RGBColorPicker.gValue = intensityAction.intensity
+                    break;
+                case (baseColor.b):
+                    newState.RGBColorPicker.bValue = intensityAction.intensity
+                    break;
+            }
+            return newState
         default:
             console.log("Error!!!!! no reducer defined");
             return newState;
@@ -70,7 +87,7 @@ const store = createStore(
     reduxMiddleware
 );
 
-export function reduxState(){
+export function reduxState() {
     return store.getState();
 }
 
@@ -78,10 +95,10 @@ ReactDOM.render(<App stateCounter={reduxState().stateCounter} />, document.getEl
 
 store.subscribe(() => {
     ReactDOM.render(<App stateCounter={reduxState().stateCounter} />, document.getElementById('root'));
-  });
+});
 
 
-export function dispatch(action:IAction){
+export function dispatch(action: IAction) {
     store.dispatch(action);
 }
 

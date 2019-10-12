@@ -1,4 +1,5 @@
 import React from 'react';
+import {dispatch,ActionType, IAction} from '../index'
 
 export enum baseColor {
     r = "red",
@@ -6,14 +7,16 @@ export enum baseColor {
     b = "blue"
 }
 
-interface IonIntensityChange{
-    (color:baseColor,intensity:number):void
+
+export interface IIntensityAction extends IAction{
+    color:baseColor,
+    intensity:number
 }
+
 
 interface IProps {
     color: baseColor;
     intensity: number;
-    onIntensityChange:IonIntensityChange;
 };
 
 interface IState { };
@@ -23,7 +26,7 @@ export default class SingleColorPicker extends React.PureComponent<IProps, IStat
     constructor(props: IProps) {
         console.log("new SingleColorPicker component will be initialized");
         super(props);
-        this.callIntensityChangeOfParentComponent = this.callIntensityChangeOfParentComponent.bind(this);
+        this.intensityChange = this.intensityChange.bind(this);
     }
 
     render() {
@@ -52,12 +55,19 @@ export default class SingleColorPicker extends React.PureComponent<IProps, IStat
             backgroundColor: colorSample
         }
         return <div>
-            <div style={scpStyle}></div><div style={sampleStyle}></div><input type="number" value={this.props.intensity} onChange={this.callIntensityChangeOfParentComponent}/>
+            <div style={scpStyle}></div><div style={sampleStyle}></div><input type="number" value={this.props.intensity} onChange={this.intensityChange}/>
             I'm a ColorPicker for {this.props.color}
         </div>
     }
 
-    callIntensityChangeOfParentComponent(event:any){
-        this.props.onIntensityChange(this.props.color,event.target.value);
+    intensityChange(event:any){
+        const inputElement = event.target as HTMLInputElement;
+        const intensityAction:IIntensityAction = {
+            type: ActionType.update_color_intensity,
+            color:this.props.color,
+            intensity:parseInt(inputElement.value)
+        }
+
+       dispatch(intensityAction);
     }
 }
