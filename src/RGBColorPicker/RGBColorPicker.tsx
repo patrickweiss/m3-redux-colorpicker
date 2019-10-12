@@ -1,8 +1,9 @@
 import React from 'react';
+import SingleColorPicker from './SingleColorPicker'; 
 interface IProps{};
 interface IState{};
 
-export default class App extends React.PureComponent<IProps, IState> {
+export default class RGBColorPicker extends React.PureComponent<IProps, IState> {
 
     constructor(props: IProps) {
       console.log("new App component will be initialized");
@@ -11,9 +12,10 @@ export default class App extends React.PureComponent<IProps, IState> {
   
     render(){
       return <div>
-        <p>Hello from ColorPicker</p>
-       
-  
+        <SingleColorPicker/>
+        <SingleColorPicker/>
+        <SingleColorPicker/>
+        <p>mixed color</p>
       </div>
     }
   }
