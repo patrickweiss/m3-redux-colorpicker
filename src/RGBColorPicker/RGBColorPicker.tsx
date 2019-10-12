@@ -12,9 +12,9 @@ export default class RGBColorPicker extends React.PureComponent<IProps, IState> 
   
     render(){
       return <div>
-        <SingleColorPicker color={baseColor.r}/>
-        <SingleColorPicker color={baseColor.g}/>
-        <SingleColorPicker color={baseColor.b}/>
+        <SingleColorPicker color={baseColor.r} intensity={5}/>
+        <SingleColorPicker color={baseColor.g} intensity={100}/>
+        <SingleColorPicker color={baseColor.b} intensity={200} />
         <p>mixed color</p>
       </div>
     }

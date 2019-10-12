@@ -8,6 +8,7 @@ export enum baseColor {
 }
 interface IProps{
    color:baseColor
+   intensity:number
 };
 
 interface IState{};
@@ -27,7 +28,7 @@ export default class SingleColorPicker extends React.PureComponent<IProps, IStat
             "background-color":this.props.color
        }
       return <div>
-          <div style={scpStyle}></div>
+          <div style={scpStyle}></div><input type="number" value = {this.props.intensity}/>
        I'm a ColorPicker for {this.props.color}
       </div>
     }
