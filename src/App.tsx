@@ -2,7 +2,9 @@ import React from 'react';
 import './App.css';
 import RGBColorPicker from './RGBColorPicker/RGBColorPicker'
 
-interface IProps { };
+interface IProps {
+  stateCounter:number;
+};
 interface IState { };
 
 export default class App extends React.PureComponent<IProps, IState> {
