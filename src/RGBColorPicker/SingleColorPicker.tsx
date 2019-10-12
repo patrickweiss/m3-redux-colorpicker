@@ -1,5 +1,4 @@
 import React from 'react';
-import { JSXAttribute } from '@babel/types';
 
 export enum baseColor {
     r = "red",
@@ -32,7 +31,7 @@ export default class SingleColorPicker extends React.PureComponent<IProps, IStat
             display: "inline-block",
             width: "20px",
             height: "20px",
-            "background-color": this.props.color
+            backgroundColor: this.props.color
         }
         let colorSample: string = "";
         switch (this.props.color) {
@@ -50,7 +49,7 @@ export default class SingleColorPicker extends React.PureComponent<IProps, IStat
             display: "inline-block",
             width: "20px",
             height: "20px",
-            "background-color": colorSample
+            backgroundColor: colorSample
         }
         return <div>
             <div style={scpStyle}></div><div style={sampleStyle}></div><input type="number" value={this.props.intensity} onChange={this.callIntensityChangeOfParentComponent}/>

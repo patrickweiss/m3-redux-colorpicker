@@ -4,10 +4,10 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import { createStore, compose } from 'redux';
+import { createStore, compose, Store } from 'redux';
 
 interface IWindow extends Window {
-    store: any;
+    store: Store;
     __REDUX_DEVTOOLS_EXTENSION__: any;
 }
 declare let window: IWindow;
@@ -66,6 +66,7 @@ if (window.__REDUX_DEVTOOLS_EXTENSION__) {
     );
 }
 
+
 window.store = createStore(
     reducer,
     reduxMiddleware
@@ -76,7 +77,7 @@ ReactDOM.render(<App stateCounter={window.store.getState().counter} />, document
 
 window.store.subscribe(() => {
     console.log("3. before render ---------------------------------------------");
-    ReactDOM.render(<App stateCounter={window.getUIState().counter} />, document.getElementById('root'));
+    ReactDOM.render(<App stateCounter={window.store.getState().counter} />, document.getElementById('root'));
     console.log("3. after render ---------------------------------------------");
   });
 

@@ -40,7 +40,7 @@ export default class RGBColorPicker extends React.PureComponent<IProps, IState> 
             display: "inline-block",
             width: "20px",
             height: "20px",
-            "background-color": colorSample
+            backgroundColor: colorSample
         }
       return <div>
         <SingleColorPicker color={baseColor.r} intensity={this.state.rValue} onIntensityChange={this.onIntensityChange}/>
