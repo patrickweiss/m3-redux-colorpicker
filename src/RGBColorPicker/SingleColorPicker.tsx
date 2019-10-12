@@ -1,5 +1,14 @@
 import React from 'react';
-interface IProps{};
+
+export enum baseColor {
+    r="red",
+    g="green",
+    b="blue"
+}
+interface IProps{
+   color:baseColor
+};
+
 interface IState{};
 
 export default class SingleColorPicker extends React.PureComponent<IProps, IState> {
@@ -11,9 +20,7 @@ export default class SingleColorPicker extends React.PureComponent<IProps, IStat
   
     render(){
       return <div>
-        <p>I'm a SingleColorPicker</p>
-       
-  
+        <p>I'm a ColorPicker for {this.props.color}</p>
       </div>
     }
   }

@@ -1,5 +1,5 @@
 import React from 'react';
-import SingleColorPicker from './SingleColorPicker'; 
+import SingleColorPicker, {baseColor} from './SingleColorPicker'; 
 interface IProps{};
 interface IState{};
 
@@ -12,9 +12,9 @@ export default class RGBColorPicker extends React.PureComponent<IProps, IState> 
   
     render(){
       return <div>
-        <SingleColorPicker/>
-        <SingleColorPicker/>
-        <SingleColorPicker/>
+        <SingleColorPicker color={baseColor.r}/>
+        <SingleColorPicker color={baseColor.g}/>
+        <SingleColorPicker color={baseColor.b}/>
         <p>mixed color</p>
       </div>
     }
