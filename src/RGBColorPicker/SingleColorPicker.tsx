@@ -21,7 +21,7 @@ interface IState { };
 export default class SingleColorPicker extends React.PureComponent<IProps, IState> {
 
     constructor(props: IProps) {
-        console.log("new App component will be initialized");
+        console.log("new SingleColorPicker component will be initialized");
         super(props);
         this.callIntensityChangeOfParentComponent = this.callIntensityChangeOfParentComponent.bind(this);
     }

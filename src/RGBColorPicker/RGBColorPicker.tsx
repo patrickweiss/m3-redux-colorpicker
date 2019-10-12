@@ -10,7 +10,7 @@ interface IState{
 export default class RGBColorPicker extends React.PureComponent<IProps, IState> {
 
     constructor(props: IProps) {
-      console.log("new App component will be initialized");
+      console.log("new RGBColorPicker component will be initialized");
       super(props);
       this.state = {
           rValue:5,
