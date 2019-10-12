@@ -1,4 +1,5 @@
 import React from 'react';
+import { JSXAttribute } from '@babel/types';
 
 export enum baseColor {
     r="red",
@@ -19,8 +20,15 @@ export default class SingleColorPicker extends React.PureComponent<IProps, IStat
     }
   
     render(){
+        const scpStyle = {
+            display:"inline-block",
+            width:"20px",
+            height:"20px",
+            "background-color":this.props.color
+       }
       return <div>
-        <p>I'm a ColorPicker for {this.props.color}</p>
+          <div style={scpStyle}></div>
+       I'm a ColorPicker for {this.props.color}
       </div>
     }
   }
