@@ -1,105 +1,138 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
 
-import { createStore, compose } from 'redux';
-import { IIntensityAction, baseColor } from './RGBColorPicker/SingleColorPicker'
+import { createStore, compose } from "redux";
+import {
+  IIntensityAction,
+  baseColor
+} from "./RGBColorPicker/SingleColorPicker";
+import { Dimension } from "./components/DimensionConfigurator";
 
 export enum ActionType {
-    INIT = "@@INIT",
-    redux_test = "redux_test",
-    update_color_intensity = "update_color_intensity"
+  INIT = "@@INIT",
+  redux_test = "redux_test",
+  update_color_intensity = "update_color_intensity",
+  update_square = "update_square"
 }
 export interface IAction {
-    type: ActionType;
+  type: ActionType;
+  dimension?: Dimension;
+  value?: number;
 }
 
-
 interface IRGBColorPicker {
-    rValue: number;
-    gValue: number;
-    bValue: number;
+  rValue: number;
+  gValue: number;
+  bValue: number;
+}
+
+interface Square {
+  [Dimension.width]: number;
+  [Dimension.height]: number;
 }
 
 interface IState {
-    stateCounter: number,
-    RGBColorPicker: IRGBColorPicker;
+  stateCounter: number;
+  RGBColorPicker: IRGBColorPicker;
+  square: Square;
 }
 
 const initialState: IState = {
-    stateCounter: 0,
-    RGBColorPicker: {
-        rValue: 40,
-        gValue: 100,
-        bValue: 50
-    }
+  stateCounter: 0,
+  RGBColorPicker: {
+    rValue: 40,
+    gValue: 100,
+    bValue: 50
+  },
+  square: {
+    width: 100,
+    height: 100
+  }
 };
 
-
 const reducer = (state = initialState, action: IAction) => {
-    console.log("REDUCER CALLED, stateCounter:" + state.stateCounter + " ACTION:" + action.type);
-    let newState: IState = state;
-    newState = JSON.parse(JSON.stringify(state)) as IState;
-    newState.stateCounter++;
-    switch (action.type) {
-        case ActionType.INIT:
-            return newState;
-        case ActionType.update_color_intensity:
-            const intensityAction = action as IIntensityAction
-            const color = intensityAction.color
-            console.log(color);
-            switch (color) {
-                case (baseColor.r):
-                    console.log("update red");
-                    newState.RGBColorPicker.rValue = intensityAction.intensity;
-                    break;
-                case (baseColor.g):
-                    newState.RGBColorPicker.gValue = intensityAction.intensity
-                    break;
-                case (baseColor.b):
-                    newState.RGBColorPicker.bValue = intensityAction.intensity
-                    break;
-            }
-            return newState
+  console.log(
+    "REDUCER CALLED, stateCounter:" +
+      state.stateCounter +
+      " ACTION:" +
+      action.type
+  );
+  let newState: IState = state;
+  newState = JSON.parse(JSON.stringify(state)) as IState;
+  newState.stateCounter++;
+  switch (action.type) {
+    case ActionType.INIT:
+      return newState;
+    case ActionType.update_color_intensity:
+      const intensityAction = action as IIntensityAction;
+      const color = intensityAction.color;
+      console.log(color);
+      switch (color) {
+        case baseColor.r:
+          console.log("update red");
+          newState.RGBColorPicker.rValue = intensityAction.intensity;
+          break;
+        case baseColor.g:
+          newState.RGBColorPicker.gValue = intensityAction.intensity;
+          break;
+        case baseColor.b:
+          newState.RGBColorPicker.bValue = intensityAction.intensity;
+          break;
+      }
+      return newState;
+    case ActionType.update_square:
+      switch (action.dimension) {
+        case Dimension.width:
+          if (action.value) newState.square.width = action.value;
+          break;
+        case Dimension.height:
+          if (action.value) newState.square.height = action.value;
+          break;
         default:
-            console.log("Error!!!!! no reducer defined");
-            return newState;
-    }
-}
+          break;
+      }
+      return newState;
+    default:
+      console.log("Error!!!!! no reducer defined");
+      return newState;
+  }
+};
 
 export interface IWindow extends Window {
-    __REDUX_DEVTOOLS_EXTENSION__: any;
+  __REDUX_DEVTOOLS_EXTENSION__: any;
 }
 declare let window: IWindow;
 
-
 let reduxMiddleware: any;
 if (window.__REDUX_DEVTOOLS_EXTENSION__) {
-    reduxMiddleware = compose(
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-    );
+  reduxMiddleware = compose(
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  );
 }
 
-const store = createStore(
-    reducer,
-    reduxMiddleware
-);
+const store = createStore(reducer, reduxMiddleware);
 
 export function reduxState() {
-    return store.getState();
+  return store.getState();
 }
 
-ReactDOM.render(<App stateCounter={reduxState().stateCounter} />, document.getElementById('root'));
+ReactDOM.render(
+  <App stateCounter={reduxState().stateCounter} />,
+  document.getElementById("root")
+);
 
 store.subscribe(() => {
-    ReactDOM.render(<App stateCounter={reduxState().stateCounter} />, document.getElementById('root'));
+  ReactDOM.render(
+    <App stateCounter={reduxState().stateCounter} />,
+    document.getElementById("root")
+  );
 });
 
-
 export function dispatch(action: IAction) {
-    store.dispatch(action);
+  store.dispatch(action);
 }
 
 // If you want your app to work offline and load faster, you can change
