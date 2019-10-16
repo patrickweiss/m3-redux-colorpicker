@@ -9,7 +9,9 @@ import {
   IIntensityAction,
   baseColor
 } from "./RGBColorPicker/SingleColorPicker";
-import { Dimension } from "./components/DimensionConfigurator";
+
+
+import { Dimension, IDimensionAction } from "./components/DimensionConfigurator";
 
 export enum ActionType {
   INIT = "@@INIT",
@@ -19,8 +21,6 @@ export enum ActionType {
 }
 export interface IAction {
   type: ActionType;
-  dimension?: Dimension;
-  value?: number;
 }
 
 interface IRGBColorPicker {
@@ -29,15 +29,15 @@ interface IRGBColorPicker {
   bValue: number;
 }
 
-interface Square {
-  [Dimension.width]: number;
-  [Dimension.height]: number;
+interface IRectangleConfigurator {
+  width: number;
+  height: number;
 }
 
 interface IState {
   stateCounter: number;
   RGBColorPicker: IRGBColorPicker;
-  square: Square;
+  RectangleConfigurator: IRectangleConfigurator;
 }
 
 const initialState: IState = {
@@ -47,7 +47,7 @@ const initialState: IState = {
     gValue: 100,
     bValue: 50
   },
-  square: {
+  RectangleConfigurator: {
     width: 100,
     height: 100
   }
@@ -84,12 +84,13 @@ const reducer = (state = initialState, action: IAction) => {
       }
       return newState;
     case ActionType.update_square:
-      switch (action.dimension) {
+      const dimensionAction = action as IDimensionAction;
+      switch (dimensionAction.dimension) {
         case Dimension.width:
-          if (action.value) newState.square.width = action.value;
+          if (dimensionAction.value) newState.RectangleConfigurator.width = dimensionAction.value;
           break;
         case Dimension.height:
-          if (action.value) newState.square.height = action.value;
+          if (dimensionAction.value) newState.RectangleConfigurator.height = dimensionAction.value;
           break;
         default:
           break;

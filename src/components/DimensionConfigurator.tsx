@@ -1,9 +1,14 @@
 import React, { Component } from "react";
-import { dispatch, ActionType } from "../index";
+import { dispatch, ActionType, IAction } from "../index";
 
 export enum Dimension {
   width = "width",
   height = "height"
+}
+
+export interface IDimensionAction extends IAction{
+  dimension:Dimension,
+  value:number
 }
 
 interface IProps {
@@ -14,26 +19,17 @@ interface IProps {
 interface IState {}
 
 export default class DimensionConfigurator extends Component<IProps, IState> {
+  constructor(props:IProps){
+    super(props);
+    this.handleLengthChange = this.handleLengthChange.bind(this);
+  }
   render() {
     return (
       <div>
         <div>
           <label htmlFor="setLength">Set the leng of the div </label>
-          <input
-            type="number"
-            name="setLength"
-            id="setLength"
-            min="25"
-            max="500"
-            step="25"
-            value={this.props.length}
-            onChange={e =>
-              dispatch({
-                type: ActionType.update_square,
-                dimension: this.props.dimension,
-                value: parseInt(e.target.value)
-              })
-            }
+          <input type="number" name="setLength" id="setLength" min="25" max="500"  step="25" value={this.props.length}
+            onChange={this.handleLengthChange}
           />
         </div>
         <div>
@@ -50,5 +46,14 @@ export default class DimensionConfigurator extends Component<IProps, IState> {
         </div>
       </div>
     );
+  }
+
+  handleLengthChange(event:any){
+    const dimensionAction:IDimensionAction = {
+      type: ActionType.update_square,
+      dimension: this.props.dimension,
+      value: parseInt(event.target.value)
+    }
+    dispatch(dimensionAction);
   }
 }

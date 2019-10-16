@@ -12,23 +12,23 @@ export default class SquareConfigurator extends Component<IProps, IState> {
   render() {
     return (
       <div>
-        <p>Hello I'm a square configurator</p>
+        <p>Hello I'm a rectangle configurator</p>
         <DimensionConfigurator
           dimension={Dimension.width}
-          length={reduxState().square.width}
+          length={reduxState().RectangleConfigurator.width}
         />
         <DimensionConfigurator
           dimension={Dimension.height}
-          length={reduxState().square.height}
+          length={reduxState().RectangleConfigurator.height}
         />
         <div
           style={{
-            height: `${reduxState().square.height}px`,
-            width: `${reduxState().square.width}px`,
+            height: `${reduxState().RectangleConfigurator.height}px`,
+            width: `${reduxState().RectangleConfigurator.width}px`,
             backgroundColor: "red"
           }}
         >
-          This is a square div
+          This is a rectangle div
         </div>
       </div>
     );
