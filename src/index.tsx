@@ -25,7 +25,7 @@ interface IRGBColorPicker {
 
 //we define the structure of the complete state
 interface IState {
-    stateCounter: number,
+    stateCounter: number;
     RGBColorPicker: IRGBColorPicker;
 }
 //we initialize the state for all the components we have in the app
@@ -87,6 +87,8 @@ const store = createStore(
     reducer,
     reduxMiddleware
 );
+
+
 
 //the initial render
 ReactDOM.render(<App stateCounter={reduxState().stateCounter} />, document.getElementById('root'));
