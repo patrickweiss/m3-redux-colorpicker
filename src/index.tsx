@@ -3,14 +3,9 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-
 import { createStore, compose } from "redux";
-import {
-  IIntensityAction,
-  baseColor
-} from "./RGBColorPicker/SingleColorPicker";
 
-
+import { IIntensityAction, baseColor } from "./RGBColorPicker/SingleColorPicker";
 import { Dimension, IDimensionAction } from "./components/DimensionConfigurator";
 
 export enum ActionType {
@@ -22,24 +17,20 @@ export enum ActionType {
 export interface IAction {
   type: ActionType;
 }
-
 interface IRGBColorPicker {
   rValue: number;
   gValue: number;
   bValue: number;
 }
-
 interface IRectangleConfigurator {
   width: number;
   height: number;
 }
-
 interface IState {
   stateCounter: number;
   RGBColorPicker: IRGBColorPicker;
   RectangleConfigurator: IRectangleConfigurator;
 }
-
 const initialState: IState = {
   stateCounter: 0,
   RGBColorPicker: {
@@ -54,14 +45,8 @@ const initialState: IState = {
 };
 
 const reducer = (state = initialState, action: IAction) => {
-  console.log(
-    "REDUCER CALLED, stateCounter:" +
-      state.stateCounter +
-      " ACTION:" +
-      action.type
-  );
-  let newState: IState = state;
-  newState = JSON.parse(JSON.stringify(state)) as IState;
+  console.log("REDUCER CALLED, stateCounter:" + state.stateCounter + " ACTION:" + action.type);
+  let newState = JSON.parse(JSON.stringify(state)) as IState;
   newState.stateCounter++;
   switch (action.type) {
     case ActionType.INIT:
@@ -106,7 +91,6 @@ export interface IWindow extends Window {
   __REDUX_DEVTOOLS_EXTENSION__: any;
 }
 declare let window: IWindow;
-
 let reduxMiddleware: any;
 if (window.__REDUX_DEVTOOLS_EXTENSION__) {
   reduxMiddleware = compose(

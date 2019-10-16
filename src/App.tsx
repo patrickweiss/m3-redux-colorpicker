@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import RGBColorPicker from "./RGBColorPicker/RGBColorPicker";
 import { reduxState, dispatch, ActionType } from "./index";
-import SquareConfigurator from "./components/SquareConfigurator";
+import RectangleConfigurator from "./components/RectangleConfigurator";
 
 interface IProps {
   stateCounter: number;
@@ -30,7 +30,7 @@ export default class App extends React.PureComponent<IProps, IState> {
         </p>
         <RGBColorPicker stateCounter={reduxState().stateCounter} />
         <br />
-        <SquareConfigurator stateCounter={reduxState().stateCounter} />
+        <RectangleConfigurator stateCounter={reduxState().stateCounter} />
       </div>
     );
   }

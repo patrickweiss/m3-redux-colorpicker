@@ -8,7 +8,7 @@ interface IProps {
 
 interface IState {}
 
-export default class SquareConfigurator extends Component<IProps, IState> {
+export default class RectangleConfigurator extends Component<IProps, IState> {
   render() {
     return (
       <div>
