@@ -5,6 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import { createStore, compose } from 'redux';
+
 import { IIntensityAction, baseColor } from './RGBColorPicker/SingleColorPicker'
 
 export enum ActionType {
@@ -15,19 +16,19 @@ export enum ActionType {
 export interface IAction {
     type: ActionType;
 }
-
-
+//we define the structure of the state for the color picker 
 interface IRGBColorPicker {
     rValue: number;
     gValue: number;
     bValue: number;
 }
 
+//we define the structure of the complete state
 interface IState {
     stateCounter: number,
     RGBColorPicker: IRGBColorPicker;
 }
-
+//we initialize the state for all the components we have in the app
 const initialState: IState = {
     stateCounter: 0,
     RGBColorPicker: {
@@ -37,7 +38,7 @@ const initialState: IState = {
     }
 };
 
-
+//here we define how the actions will change the state
 const reducer = (state = initialState, action: IAction) => {
     console.log("REDUCER CALLED, stateCounter:" + state.stateCounter + " ACTION:" + action.type);
     let newState: IState = state;
@@ -69,35 +70,38 @@ const reducer = (state = initialState, action: IAction) => {
     }
 }
 
+//we need all the following , to connect the redux store to the redux developer tools in chrome
 export interface IWindow extends Window {
     __REDUX_DEVTOOLS_EXTENSION__: any;
 }
 declare let window: IWindow;
-
-
 let reduxMiddleware: any;
 if (window.__REDUX_DEVTOOLS_EXTENSION__) {
     reduxMiddleware = compose(
         window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
     );
 }
-
+//the store will be created with the reducer we defined and the middleware
+//to connect the redux tools
 const store = createStore(
     reducer,
     reduxMiddleware
 );
 
-export function reduxState() {
-    return store.getState();
-}
-
+//the initial render
 ReactDOM.render(<App stateCounter={reduxState().stateCounter} />, document.getElementById('root'));
-
+//the whole app will be rerendered after every state change,
+//because the stateCounter will always be different
 store.subscribe(() => {
     ReactDOM.render(<App stateCounter={reduxState().stateCounter} />, document.getElementById('root'));
 });
 
 
+//this is just a shortcut for later to get the state, since will need the state alle the time
+export function reduxState() {
+    return store.getState();
+}
+//this is just a shortcut to dipatach and action, since we will do this later all the time
 export function dispatch(action: IAction) {
     store.dispatch(action);
 }
